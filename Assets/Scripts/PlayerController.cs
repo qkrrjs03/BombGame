@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float rspeed = 130f;
     void Update()
     {
+        if (GameManager.instance.isGameover) { return; }
+
         translation = Input.GetAxis("Ve") * tspeed;
         rotation = Input.GetAxis("Ho") * rspeed;
 
@@ -34,7 +36,8 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.tag == "Obstacle")
+        if (GameManager.instance.isGameover) { return; }
+        if (collision.collider.tag == "Obstacle")
         {
             ani.SetTrigger("damage");
             GameManager.instance.AddScore(-1);
